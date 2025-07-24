@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tarot - Movie Search App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>🔮 Movie Tarot</h1>
+  </header>
+  <nav>
+  <div class="nav-left">
+    <a href="index.html">Home</a>
+    <a href="favorites.html">Favorites</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="movielab.html">Movie Lab</a>
+    <a href="tarot.html">Tarot</a>
+    <a href="bts.html">BTS</a>
+    <a href="awards.html">Awards</a>
+  </div>
+  <div class="nav-right">
+    <span id="authLink"></span>
+  </div>
+</nav>
+
+
+  <main class="center-main">
+    <section class="content-section">
+      <h2>✨ Let Fate Choose Your Film</h2>
+      <p>Feeling indecisive? Click below and let the Movie Tarot reveal your next watch!</p>
+      <button onclick="drawTarot()">Draw Movie Tarot</button>
+      <div id="tarotResult" style="margin-top:1rem;"></div>
+    </section>
+
+    <section class="content-section">
+      <h2>🌙 Daily Tarot Advice</h2>
+      <p>Need a sign from the movie universe? Click to draw a daily card.</p>
+      <button onclick="drawAdvice()">Draw Advice</button>
+      <div id="adviceResult" style="margin-top:1rem;"></div>
+    </section>
+
+    <section class="content-section">
+      <h2>🃏 Tarot History Fun Fact</h2>
+      <p>Did you know? The first tarot decks were used for playing card games, not fortune telling!</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Movie Search App</p>
+  </footer>
+
+  <script>
+    function drawTarot() {
+      const movies = [
+        "Inception 🌌", "Titanic 🚢", "Parasite 🏠", "The Dark Knight 🦇",
+        "Spirited Away 🐉", "Pulp Fiction 💼", "The Shawshank Redemption ⛓️",
+        "Interstellar 🚀", "La La Land 🎶", "Avengers: Endgame 🛡️"
+      ];
+      const pick = movies[Math.floor(Math.random() * movies.length)];
+      document.getElementById("tarotResult").innerText = "✨ Your movie is: " + pick;
+    }
+
+    function drawAdvice() {
+      const advices = [
+        "🎥 Trust your gut — the movie you keep thinking about is the right pick!",
+        "🍿 Try a genre you've never watched before!",
+        "📽️ Watch an old classic today; you might find something new.",
+        "🎬 Invite a friend and share the experience.",
+        "✨ Rewatch your comfort movie; sometimes familiarity heals.",
+        "🎞️ Watch a foreign film and explore a new culture!"
+      ];
+      const pick = advices[Math.floor(Math.random() * advices.length)];
+      document.getElementById("adviceResult").innerText = pick;
+    }
+    // Redirect if not logged in
+const user = JSON.parse(localStorage.getItem("loggedInUser"));
+if (!user) {
+  alert("Please login first!");
+  window.location.href = "login.html";
+}
+  </script>
+ 
+
+
+</body>
+</html>

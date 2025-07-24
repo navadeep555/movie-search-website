@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Subscription</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+  <h1>🎬 Premium Trailers Subscription</h1>
+</header>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html">Home</a>
+    <a href="favorites.html">Favorites</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="movielab.html">Movie Lab</a>
+    <a href="tarot.html">Tarot</a>
+    <a href="bts.html">BTS</a>
+    <a href="awards.html">Awards</a>
+    <a href="subscription.html">Subscribe</a>
+  </div>
+  <div class="nav-right">
+    <span id="authLink"></span>
+  </div>
+</nav>
+
+<main class="center-main">
+  <section class="subscription-section">
+    <h2>Go Premium 🚀</h2>
+    <p>Get exclusive early access to new trailers, ad-free experience and more!</p>
+    <div class="subscription-plan">
+      <h3>Monthly Plan</h3>
+      <p class="price">₹199 / month</p>
+    </div>
+
+    <form id="paymentForm" class="subscription-form">
+      <label for="paymentType">Payment Method:</label>
+      <select id="paymentType" name="paymentType" required>
+        <option value="">--Select--</option>
+        <option value="card">Credit / Debit Card</option>
+        <option value="upi">UPI</option>
+        <option value="wallet">Wallet</option>
+      </select>
+
+      <div id="cardFields" style="display: none;">
+        <input type="text" id="card" name="card" placeholder="Card Number (Demo)" required />
+        <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required />
+        <input type="text" id="cvv" name="cvv" placeholder="CVV" required />
+      </div>
+
+      <div id="upiField" style="display: none;">
+        <input type="text" id="upi" name="upi" placeholder="UPI ID (e.g., name@bank)" required />
+      </div>
+
+      <div id="walletField" style="display: none;">
+        <input type="text" id="wallet" name="wallet" placeholder="Wallet Number / Email" required />
+      </div>
+
+      <input type="email" id="email" name="email" placeholder="Enter your email" required />
+      <button type="submit">Subscribe & Pay</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 Movie Search App</p>
+</footer>
+
+<script>
+  const paymentTypeSelect = document.getElementById('paymentType');
+  paymentTypeSelect.addEventListener('change', () => {
+    document.getElementById('cardFields').style.display = 'none';
+    document.getElementById('upiField').style.display = 'none';
+    document.getElementById('walletField').style.display = 'none';
+
+    if (paymentTypeSelect.value === 'card') {
+      document.getElementById('cardFields').style.display = 'block';
+    } else if (paymentTypeSelect.value === 'upi') {
+      document.getElementById('upiField').style.display = 'block';
+    } else if (paymentTypeSelect.value === 'wallet') {
+      document.getElementById('walletField').style.display = 'block';
+    }
+  });
+
+  document.getElementById('paymentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    alert(`✅ Thank you for subscribing, ${email}! Your payment has been processed (demo).`);
+    document.getElementById('paymentForm').reset();
+    document.getElementById('cardFields').style.display = 'none';
+    document.getElementById('upiField').style.display = 'none';
+    document.getElementById('walletField').style.display = 'none';
+  });
+</script>
+
+</body>
+</html>

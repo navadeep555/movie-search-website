@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login - Movie Search App</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><h1>🎬 Movie Search App - Login</h1></header>
+<nav>
+  <div class="nav-left">
+    <a href="index.html">Home</a>
+    <a href="favorites.html">Favorites</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="movielab.html">Movie Lab</a>
+    <a href="tarot.html">Tarot</a>
+    <a href="bts.html">BTS</a>
+    <a href="awards.html">Awards</a>
+  </div>
+  <div class="nav-right">
+    <span id="authLink"></span>
+  </div>
+</nav>
+
+<main class="center-main">
+  <section class="contact-section">
+    <h2>Login to Your Account</h2>
+    <form id="loginForm" class="contact-form">
+      <label>Email:
+        <input type="email" id="loginEmail" required placeholder="you@example.com">
+      </label>
+      <label>Password:
+        <input type="password" id="loginPassword" required placeholder="Enter password">
+      </label>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+  </section>
+</main>
+
+<footer><p>© 2025 Movie Search App</p></footer>
+
+<script>
+// Login
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  try {
+    const res = await fetch('http://localhost:5000/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      // Save token + user to localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+      alert(`Welcome back, ${data.user.username}!`);
+      window.location.href = "index.html";
+    } else {
+      alert(data.msg || "Login failed");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Error connecting to server.");
+  }
+});
+
+// Show Login or username + Logout
+updateAuthLink();
+function updateAuthLink() {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  const authLink = document.getElementById("authLink");
+  authLink.innerHTML = user 
+    ? `<span>👤 ${user.username}</span> <a href="#" onclick="logout()">Logout</a>`
+    : `<a href="login.html">Login</a>`;
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("loggedInUser");
+  alert("Logged out successfully!");
+  location.reload();
+}
+</script>
+</body>
+</html>

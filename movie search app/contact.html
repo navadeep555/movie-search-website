@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Movie Search App</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-container">
+    <header>
+      <h1>Contact Us</h1>
+    </header>
+    
+    <nav>
+      <div class="nav-left">
+        <a href="index.html">Home</a>
+        <a href="favorites.html">Favorites</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="movielab.html">Movie Lab</a>
+        <a href="tarot.html">Tarot</a>
+        <a href="bts.html">BTS</a>
+        <a href="awards.html">Awards</a>
+      </div>
+      <div class="nav-right">
+        <span id="authLink"></span>
+      </div>
+    </nav>
+
+    <main class="center-main">
+      <section class="contact-section">
+        <h2>We'd love to hear from you!</h2>
+        <p>Questions, feedback, or ideas? Send us a message below.</p>
+
+        <form class="contact-form" id="contactForm">
+          <label>
+            Name:
+            <input type="text" id="name" required placeholder="Your name">
+          </label>
+          <label>
+            Email:
+            <input type="email" id="email" required placeholder="you@example.com">
+          </label>
+          <label>
+            Message:
+            <textarea id="message" rows="5" required placeholder="Your message"></textarea>
+          </label>
+          <button type="submit">Send Message</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 Movie Search App</p>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !message) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      alert("Thank you, " + name + "! Your message has been sent.");
+      this.reset();
+    });
+  </script>
+</body>
+</html>

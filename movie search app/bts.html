@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BTS - Movie Search App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>🎥 Behind The Scenes</h1>
+  </header>
+<nav>
+  <div class="nav-left">
+    <a href="index.html">Home</a>
+    <a href="favorites.html">Favorites</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="movielab.html">Movie Lab</a>
+    <a href="tarot.html">Tarot</a>
+    <a href="bts.html">BTS</a>
+    <a href="awards.html">Awards</a>
+  </div>
+  <div class="nav-right">
+    <span id="authLink"></span>
+  </div>
+</nav>
+
+
+<main class="center-main">
+  <section class="content-section">
+    <h2>Discover Fun Facts & Stories</h2>
+    <p>Go behind the camera to explore how your favorite films were made!</p>
+  </section>
+
+  <section class="content-section">
+    <h3>🎬 Iconic Movie Scenes Explained</h3>
+    <ul>
+      <li><strong>Inception:</strong> The famous rotating hallway was built as a real rotating set!</li>
+      <li><strong>Jurassic Park:</strong> The T-Rex roar was a mix of dog, penguin, tiger, alligator, and elephant sounds.</li>
+      <li><strong>The Dark Knight:</strong> Heath Ledger improvised the slow clap in the jail cell scene.</li>
+    </ul>
+  </section>
+
+  <section class="content-section">
+    <h3>🎥 Crew & Cast Shout-outs</h3>
+    <p>Movies aren't made by stars alone — here's to the cinematographers, set designers, sound engineers, and thousands of unsung heroes who bring magic to the screen!</p>
+  </section>
+
+  <section class="content-section">
+    <h3>✨ Random BTS Fact</h3>
+    <button onclick="showRandomFact()">Show Me!</button>
+    <p id="btsFact" style="margin-top:1rem;"></p>
+  </section>
+
+  <section class="content-section">
+    <h3>🎞️ Trivia Challenge</h3>
+    <p><strong>Question:</strong> Which movie featured a ship called the Black Pearl?</p>
+    <button onclick="showTriviaAnswer()">Reveal Answer</button>
+    <p id="triviaAnswer" style="margin-top:1rem;"></p>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 Movie Search App</p>
+</footer>
+
+<script>
+  function showRandomFact() {
+    const facts = [
+      "🎥 The sound of lightsabers in Star Wars was created by combining TV static with the hum of an old film projector.",
+      "🎬 Lord of the Rings filmed all three movies simultaneously over 438 days!",
+      "📽️ In Titanic, the drawing of Rose was actually done by director James Cameron himself.",
+      "🦖 Jurassic Park used both animatronics and CGI for the dinosaurs — blending techniques for realism.",
+      "🚀 Interstellar built a real rotating set for the spaceship scenes."
+    ];
+    const pick = facts[Math.floor(Math.random() * facts.length)];
+    document.getElementById('btsFact').innerText = pick;
+  }
+
+  function showTriviaAnswer() {
+    document.getElementById('triviaAnswer').innerText = "🏴‍☠️ Pirates of the Caribbean!";
+  }
+  // Redirect if not logged in
+const user = JSON.parse(localStorage.getItem("loggedInUser"));
+if (!user) {
+  alert("Please login first!");
+  window.location.href = "login.html";
+}
+</script>
+</body>
+</html>

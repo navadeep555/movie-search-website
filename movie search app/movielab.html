@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movie Lab - Movie Search App</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>🧪 Movie Lab</h1>
+</header>
+<nav>
+  <div class="nav-left">
+    <a href="index.html">Home</a>
+    <a href="favorites.html">Favorites</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="movielab.html">Movie Lab</a>
+    <a href="tarot.html">Tarot</a>
+    <a href="bts.html">BTS</a>
+    <a href="awards.html">Awards</a>
+  </div>
+  <div class="nav-right">
+    <span id="authLink"></span>
+  </div>
+</nav>
+
+
+<main class="center-main">
+  <section class="content-section">
+    <h2>🎬 Explore Movie Experiments</h2>
+    <p>Fun tools, quizzes, random picks, and games to discover your next favorite film!</p>
+  </section>
+
+  <section class="content-section">
+    <h3>🎲 Random Movie Picker</h3>
+    <button onclick="pickRandomMovie()">Pick a Random Movie</button>
+    <div id="randomMovieResult"></div>
+  </section>
+
+  <section class="content-section">
+    <h3>📊 Quick Poll</h3>
+    <p>Which do you prefer?</p>
+    <button onclick="vote('Action')">Action</button>
+    <button onclick="vote('Comedy')">Comedy</button>
+    <button onclick="vote('Drama')">Drama</button>
+    <p id="pollResult"></p>
+  </section>
+
+  <section class="content-section">
+    <h3>🎥 Spin the Genre</h3>
+    <button onclick="spinGenre()">Spin</button>
+    <p id="genreResult"></p>
+  </section>
+
+  <section class="content-section">
+    <h3>🧠 Quiz Time!</h3>
+    <div id="quizContainer">
+      <button onclick="startQuiz()">Start Quiz</button>
+    </div>
+    <p id="quizScore"></p>
+  </section>
+
+  <section class="content-section">
+    <h3>🎭 Guess the Movie Emoji</h3>
+    <p id="emojiQuestion">❓</p>
+    <input type="text" id="emojiAnswer" placeholder="Your guess..." />
+    <button onclick="checkEmojiAnswer()">Guess</button>
+    <p id="emojiFeedback"></p>
+  </section>
+
+  <section class="content-section">
+    <h3>📅 Movie of the Day</h3>
+    <div id="dailyMovie"></div>
+  </section>
+
+  <section class="content-section">
+    <h3>📝 Share Your Recommendation</h3>
+    <input type="text" id="recommendationInput" placeholder="Enter movie title">
+    <button onclick="addRecommendation()">Add</button>
+    <ul id="recommendationsList"></ul>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 Movie Search App</p>
+</footer>
+<script>
+  const randomMovies = [
+    { title: "Inception", poster: "https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg" },
+    { title: "Parasite", poster: "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" },
+    { title: "The Godfather", poster: "https://image.tmdb.org/t/p/w500/eEslKSwcqmiNS6va24Pbxf2UKmJ.jpg" },
+    { title: "Joker", poster: "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg" }
+  ];
+  const genres = ["Horror", "Sci-Fi", "Fantasy", "Thriller", "Romance", "Animation", "Documentary"];
+  const emojiGames = [
+    { emoji: "🧑‍🚀🌌", answer: "Interstellar" },
+    { emoji: "🃏🤡", answer: "Joker" },
+    { emoji: "🦇🏙️", answer: "The Dark Knight" },
+    { emoji: "🐼🥋", answer: "Kung Fu Panda" }
+  ];
+  let currentEmoji = emojiGames[Math.floor(Math.random() * emojiGames.length)];
+  document.getElementById("emojiQuestion").innerText = currentEmoji.emoji;
+
+  function pickRandomMovie() {
+    const movie = randomMovies[Math.floor(Math.random() * randomMovies.length)];
+    document.getElementById("randomMovieResult").innerHTML = `
+      <img src="${movie.poster}" alt="${movie.title}" style="width:120px;border-radius:6px;margin:5px">
+      <p>🎉 You should watch: <strong>${movie.title}</strong></p>`;
+  }
+
+  function vote(choice) {
+    document.getElementById("pollResult").innerText = "✅ You voted for: " + choice;
+  }
+
+  function spinGenre() {
+    const genre = genres[Math.floor(Math.random() * genres.length)];
+    document.getElementById("genreResult").innerText = "🎡 Genre: " + genre;
+  }
+
+  function checkEmojiAnswer() {
+    const user = document.getElementById("emojiAnswer").value.trim().toLowerCase();
+    if (user === currentEmoji.answer.toLowerCase()) {
+      document.getElementById("emojiFeedback").innerText = "✅ Correct! 🎉";
+    } else {
+      document.getElementById("emojiFeedback").innerText = "❌ Try again!";
+    }
+  }
+
+  // Movie of the day
+  const today = new Date().getDate();
+  const daily = randomMovies[today % randomMovies.length];
+  document.getElementById("dailyMovie").innerHTML = `
+    <img src="${daily.poster}" alt="${daily.title}" style="width:120px;border-radius:6px;margin:5px">
+    <p>🍿 Today's movie: <strong>${daily.title}</strong></p>`;
+
+  // Recommendations stored in localStorage
+  function addRecommendation() {
+    const input = document.getElementById("recommendationInput").value.trim();
+    if (!input) return;
+    let recs = JSON.parse(localStorage.getItem("recommendations")) || [];
+    recs.push(input);
+    localStorage.setItem("recommendations", JSON.stringify(recs));
+    renderRecommendations();
+    document.getElementById("recommendationInput").value = "";
+  }
+
+  function renderRecommendations() {
+    let recs = JSON.parse(localStorage.getItem("recommendations")) || [];
+    const list = document.getElementById("recommendationsList");
+    list.innerHTML = "";
+    recs.forEach(r => {
+      const li = document.createElement("li");
+      li.innerText = r;
+      list.appendChild(li);
+    });
+  }
+  renderRecommendations();
+
+  // Quiz
+  const quizQuestions = [
+    { q: "Who directed 'Inception'?", options: ["Christopher Nolan", "Steven Spielberg", "James Cameron"], a: 0 },
+    { q: "Which movie won Best Picture in 2020?", options: ["Joker", "Parasite", "1917"], a: 1 },
+    { q: "What color is the Matrix code?", options: ["Blue", "Green", "Red"], a: 1 }
+  ];
+  let currentQuiz = 0, score = 0;
+
+  function startQuiz() {
+    currentQuiz = 0; score = 0;
+    showQuizQuestion();
+  }
+
+  function showQuizQuestion() {
+    if (currentQuiz >= quizQuestions.length) {
+      document.getElementById("quizContainer").innerHTML = `<p>✅ Quiz over! Your score: ${score}/${quizQuestions.length}</p>
+        <button onclick="startQuiz()">Play again</button>`;
+      document.getElementById("quizScore").innerText = "";
+      return;
+    }
+    const q = quizQuestions[currentQuiz];
+    let html = `<p>${q.q}</p>`;
+    q.options.forEach((opt, i) => {
+      html += `<button onclick="answerQuiz(${i})">${opt}</button>`;
+    });
+    document.getElementById("quizContainer").innerHTML = html;
+    document.getElementById("quizScore").innerText = `Score: ${score}`;
+  }
+
+  function answerQuiz(selected) {
+    if (selected === quizQuestions[currentQuiz].a) score++;
+    currentQuiz++;
+    showQuizQuestion();
+  }
+// Redirect if not logged in
+const user = JSON.parse(localStorage.getItem("loggedInUser"));
+if (!user) {
+  alert("Please login first!");
+  window.location.href = "login.html";
+}
+
+</script>
+</body>
+</html>
